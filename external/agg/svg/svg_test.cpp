@@ -160,7 +160,8 @@ public:
 
 	void on_resize(int sx, int sy)
 	{
-		m_frame_buffer.create(sx, sy, flip_y_e);
+		int stride;
+		m_frame_buffer.create(sx, sy, flip_y_e, stride);
 	}
 
 	void draw(agg::rendering_buffer& rbuf, double expand, double gamma)
