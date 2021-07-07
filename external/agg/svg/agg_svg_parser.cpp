@@ -172,7 +172,7 @@ namespace svg
         delete [] m_style_buffer;
     }
     //-------------------------------------------------------------------------
-    void parser::parse(const wchar_t* fname)
+    void parser::parse(const char* fname)
     {
         m_storage.clear();
 
@@ -187,7 +187,7 @@ namespace svg
 	    XML_SetElementHandler(p, &parser::on_start_element, &parser::on_end_element);
 	    XML_SetCharacterDataHandler(p, &parser::on_content);
 
-        FILE* fd = _wfopen(fname, L"r");
+        FILE* fd = fopen(fname, "r");
         if(fd == 0)
         {
 			XML_ParserFree(p);

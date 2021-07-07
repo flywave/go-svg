@@ -40,8 +40,8 @@ namespace svg
         typedef T           mapped_type;
         typedef CompareT    key_compare;
         //---------------------------------------------------------------------
-        typedef base_type::iterator         iterator;
-        typedef base_type::const_iterator   const_iterator;
+        typedef typename base_type::iterator         iterator;
+        typedef typename base_type::const_iterator   const_iterator;
         //---------------------------------------------------------------------
         iterator begin()
         {
@@ -75,14 +75,14 @@ namespace svg
             value_compare(CompareT c) : m_comp(c) {}
         public:
             //-----------------------------------------------------------------
-            template <class T>
-            bool operator()(const value_type& x, const T& y) const
+            template <class U>
+            bool operator()(const value_type& x, const U& y) const
             {
                 return m_comp(x.first, y);
             }
             //-----------------------------------------------------------------
-            template <class T>
-            bool operator()(const T& x, const value_type& y) const
+            template <class U>
+            bool operator()(const U& x, const value_type& y) const
             {
                 return m_comp(x, y.first);
             }

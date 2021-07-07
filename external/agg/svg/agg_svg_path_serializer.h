@@ -6,6 +6,7 @@
 #include "agg_array.h"
 #include "agg_svg_basics.h"
 #include "agg_svg_parse_real.h"
+#include "agg_svg_exception.h"
 
 
 namespace agg

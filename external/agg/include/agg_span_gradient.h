@@ -18,6 +18,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
 #include "agg_math.h"
 #include "agg_array.h"
 #include "agg_trans_affine.h"
