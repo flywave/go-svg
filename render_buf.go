@@ -51,15 +51,16 @@ func (ctx *RenderBuf) GetRaw() []byte {
 }
 
 func (ctx *RenderBuf) GetImage() image.Image {
-	width, height, stride := ctx.GetSize()
+	width, height, _ := ctx.GetSize()
 
 	rect := image.Rect(0, 0, int(width), int(height))
 	rgba := image.NewNRGBA(rect)
 
+	copy(rgba.Pix, ctx.buf)
 	for y := 0; y < int(height); y++ {
 		for x := 0; x < int(width); x++ {
-			c := ctx.buf[y*int(stride)+x:]
-			rgba.Set(x, y, color.NRGBA{R: c[0], G: c[1], B: c[2], A: c[3]})
+			c := rgba.NRGBAAt(x, y)
+			rgba.Set(x, y, color.NRGBA{R: c.B, G: c.G, B: c.R, A: c.A})
 		}
 	}
 	return rgba

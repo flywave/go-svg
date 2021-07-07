@@ -16,9 +16,10 @@ type Context struct {
 	m *C.struct__svg_context_t
 }
 
-func NewContext(flip_y bool) *Context {
+func NewContext(width, height uint32, flip_y bool) *Context {
 	ret := &Context{m: C.svg_context_create(C.bool(flip_y))}
 	runtime.SetFinalizer(ret, (*Context).free)
+	ret.Resize(width, height)
 	return ret
 }
 
@@ -41,8 +42,8 @@ func (g *Context) Parse(svg string) {
 	C.svg_context_parse(g.m, cstr)
 }
 
-func (g *Context) Resize(size [2]uint32) {
-	C.svg_context_resize(g.m, C.uint(size[0]), C.uint(size[1]))
+func (g *Context) Resize(width, height uint32) {
+	C.svg_context_resize(g.m, C.uint(width), C.uint(height))
 }
 
 func (g *Context) GetSize() (width, height uint32, stride int32) {
@@ -57,5 +58,5 @@ func (g *Context) Render() *RenderBuf {
 	width, height, stride := g.GetSize()
 	buf := NewRenderBuf(width, height, stride)
 	C.svg_context_draw(g.m, buf.m)
-	return nil
+	return buf
 }

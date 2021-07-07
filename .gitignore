@@ -26,7 +26,6 @@ Session.vim
 .netrwhist
 *~
 build
-libs/*
 test/*
 server/data/*
 server/cache/*

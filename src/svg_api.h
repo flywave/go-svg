@@ -19,7 +19,6 @@ typedef struct _svg_render_buf_t svg_render_buf_t;
 
 FLYWAVE_SVG_API svg_context_t *svg_context_create(_Bool flip_y);
 FLYWAVE_SVG_API void svg_context_free(svg_context_t *ctx);
-
 FLYWAVE_SVG_API void svg_context_draw(svg_context_t *ctx,
                                       svg_render_buf_t *buf);
 FLYWAVE_SVG_API void svg_context_reset(svg_context_t *ctx);
@@ -47,6 +46,7 @@ FLYWAVE_SVG_API void svg_render_buf_get_size(svg_render_buf_t *ctx,
 FLYWAVE_SVG_API void svg_render_buf_clear(svg_render_buf_t *ctx, uint8_t v);
 FLYWAVE_SVG_API void svg_render_buf_copy_from(svg_render_buf_t *ctx,
                                               svg_render_buf_t *src);
+FLYWAVE_SVG_API void svg_render_buf_render(svg_render_buf_t *ctx, uint8_t *buf);
 
 #ifdef __cplusplus
 }

@@ -45,12 +45,13 @@ FLYWAVE_SVG_API struct _svg_context_t *svg_context_create(_Bool flip_y) {
   ctx->attributes = std::make_unique<agg::svg::attributes>(ctx->settings);
   ctx->renderer = std::make_unique<agg::svg::renderer_rgba>(ctx->rasterizer,
                                                             ctx->frame_buffer);
-
   ctx->gamma = std::make_unique<agg::slider_ctrl<agg::rgba8>>(5, 5, 256 - 5, 20,
                                                               !flip_y);
+
   ctx->gamma->label("Gamma=%3.2f");
   ctx->gamma->range(0.0, 3.0);
   ctx->gamma->value(1.0);
+
   return ctx;
 }
 
@@ -69,10 +70,10 @@ FLYWAVE_SVG_API void svg_context_draw(svg_context_t *ctx,
                                       svg_render_buf_t *buf) {
   agg::svg::renderer_rgba::pixfmt_type pixfmt(buf->rbuf);
   agg::svg::renderer_rgba::renderer_base_type rbase(pixfmt);
-
+  
   double gamma = ctx->gamma->value();
 
-  ctx->rasterizer.gamma(gamma);
+	ctx->rasterizer.gamma(gamma);
   ctx->settings.gamma(gamma);
 
   ctx->attributes->window(0, 0, buf->rbuf.width(), buf->rbuf.height());
@@ -87,21 +88,15 @@ FLYWAVE_SVG_API void svg_context_draw(svg_context_t *ctx,
 
   assert(0 == ctx->attributes->num_sessions());
 
-  if (ctx->settings.gamma() != 1.0) {
-    ctx->frame_buffer.pixfmt().apply_gamma_inv(ctx->settings.gamma_lut());
-  }
-
   if (ctx->frame_buffer.is_valid()) {
     rbase.copy_from(ctx->frame_buffer.ren_buf());
-  } else {
-    rbase.clear(agg::svg::color_type(255, 255, 255));
   }
 }
 
 FLYWAVE_SVG_API void svg_context_reset(svg_context_t *ctx) {
   ctx->id2elem_map.clear();
   ctx->attributes->clear();
-  ctx->renderer.reset();
+  ctx->renderer->reset();
 }
 
 void _indexation(svg_context_t *ctx) {

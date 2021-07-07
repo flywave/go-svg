@@ -16,3 +16,14 @@ SOURCE_GROUP("include" FILES ${csvg_HEADER_FILES})
 
 SET_TARGET_PROPERTIES(csvg
                     PROPERTIES PUBLIC_HEADER "${headers}")
+
+
+ADD_EXECUTABLE(test test.cc)
+
+IF(UNIX AND NOT APPLE)
+TARGET_LINK_LIBRARIES(test -Wl,--start-group csvg ${FLYWAVE_LIBRARY_DEPES} -Wl,--end-group)
+ELSE()
+TARGET_LINK_LIBRARIES(test csvg ${FLYWAVE_LIBRARY_DEPES})
+ENDIF()
+
+ 
