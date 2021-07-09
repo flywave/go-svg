@@ -138,9 +138,9 @@ namespace svg
     {
         if(m_ptr == 0) return false;
 
-        // Skip all white spaces and other garbage
+        // Skip all white spaces and other garbage 
         while(*m_ptr && !is_command(*m_ptr) && !is_numeric(*m_ptr)) 
-        {
+        {   
             if(!is_separator(*m_ptr))
             {
 				throw exception("Parsing Path Structure: Invalid Character %c", *m_ptr);
@@ -192,9 +192,14 @@ namespace svg
             *buf_ptr++ = char(*m_ptr++);
         }
 
+
         // Copy all numeric characters
+        int isdot=0;
         while(buf_ptr < buf+255 && is_numeric(*m_ptr))
         {
+            if(isdot>1){m_ptr--;break;}
+             if(*m_ptr=='.'){isdot++;}
+
             *buf_ptr++ = char(*m_ptr++);
         }
 
