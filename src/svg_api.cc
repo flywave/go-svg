@@ -11,6 +11,7 @@
 #include "platform/agg_platform_support.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <fstream>
 #include <memory>
 #include <stdint.h>
@@ -34,6 +35,7 @@ struct _svg_context_t {
   agg::svg::pipeline pipeline;
   agg::svg::gradient_lut_cache gradient_lut_cache;
   std::unique_ptr<agg::slider_ctrl<agg::rgba8>> gamma;
+  std::string error;
 };
 
 struct _svg_render_buf_t {
@@ -70,10 +72,10 @@ FLYWAVE_SVG_API void svg_context_draw(svg_context_t *ctx,
                                       svg_render_buf_t *buf) {
   agg::svg::renderer_rgba::pixfmt_type pixfmt(buf->rbuf);
   agg::svg::renderer_rgba::renderer_base_type rbase(pixfmt);
-  
+
   double gamma = ctx->gamma->value();
 
-	ctx->rasterizer.gamma(gamma);
+  ctx->rasterizer.gamma(gamma);
   ctx->settings.gamma(gamma);
 
   ctx->attributes->window(0, 0, buf->rbuf.width(), buf->rbuf.height());
@@ -116,8 +118,20 @@ FLYWAVE_SVG_API void svg_context_parse(svg_context_t *ctx, char *fname) {
   svg_context_reset(ctx);
 
   agg::svg::parser p(ctx->storage, ctx->attr_map);
-  p.parse(fname);
+  try {
+    p.parse(fname);
+  } catch (std::exception ex) {
+    ctx->error = ex.what();
+  }
   _indexation(ctx);
+}
+
+FLYWAVE_SVG_API _Bool svg_context_has_error(svg_context_t *ctx) {
+  return !ctx->error.empty();
+}
+
+FLYWAVE_SVG_API const char *svg_context_get_error(svg_context_t *ctx) {
+  return ctx->error.c_str();
 }
 
 FLYWAVE_SVG_API int svg_context_resize(svg_context_t *ctx, unsigned sx,

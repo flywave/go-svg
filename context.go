@@ -7,6 +7,7 @@ package svg
 // #cgo CXXFLAGS: -I ./ -I ./libs
 import "C"
 import (
+	"errors"
 	"image/color"
 	"runtime"
 	"unsafe"
@@ -25,6 +26,14 @@ func NewContext(width, height uint32, flip_y bool) *Context {
 
 func (g *Context) free() {
 	C.svg_context_free(g.m)
+}
+
+func (g *Context) getError() error {
+	if bool(C.svg_context_has_error(g.m)) {
+		return errors.New(C.GoString(C.svg_context_get_error(g.m)))
+	} else {
+		return nil
+	}
 }
 
 func (ctx *Context) Clear(c color.Color) {

@@ -17,6 +17,9 @@ extern "C" {
 typedef struct _svg_context_t svg_context_t;
 typedef struct _svg_render_buf_t svg_render_buf_t;
 
+FLYWAVE_SVG_API _Bool svg_context_has_error(svg_context_t *ctx);
+FLYWAVE_SVG_API const char* svg_context_get_error(svg_context_t *ctx);
+
 FLYWAVE_SVG_API svg_context_t *svg_context_create(_Bool flip_y);
 FLYWAVE_SVG_API void svg_context_free(svg_context_t *ctx);
 FLYWAVE_SVG_API void svg_context_draw(svg_context_t *ctx,
