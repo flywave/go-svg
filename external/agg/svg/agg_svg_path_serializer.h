@@ -416,6 +416,7 @@ namespace svg
             return;
         }
 
+return;
 		throw exception("Parsing Path Structure: Invalid use of reflection in command '%c' - The command must be followed by a curve command", cmd);
     }
 
