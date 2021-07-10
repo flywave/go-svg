@@ -13,6 +13,8 @@
 #include <utility>
 //-----------------------------------------------------------------------------
 #define RGB_KEYWORD         "rgb"
+#define HSL_KEYWORD         "hsl"
+#define HSL_KEYWORD_LEN     sizeof(HSL_KEYWORD)-1    
 #define RGB_KEYWORD_LEN     sizeof(RGB_KEYWORD)-1    
 //-----------------------------------------------------------------------------
 namespace agg
@@ -50,6 +52,9 @@ namespace svg
         
         //-- parses color string represented in rgb format( ex: rgba(255,255,255,1.0) )    
         static const char* parse_color_rgb( const char* str, agg::rgba8& color );
+
+        // 
+        static const char* parse_color_hsl( const char* str, agg::rgba8& color );
         
         //-- reads next RGB value from str, using stop_sign as delimiter    
         static unsigned char get_next_rgb_value( const char*& str, char stop_sign );

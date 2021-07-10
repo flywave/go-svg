@@ -291,6 +291,90 @@ const char* color_parser::parse_color_rgb( const char* str, agg::rgba8& color )
 	
 }
 
+
+void hsl_to_rgb( float* rgb,float* hsl){
+  float c = (1 - fabs(2*hsl[2] -1))*hsl[1];
+  float hp = hsl[0]/60;
+  float x= c*(1 - fabs(fmod(hp,2) -1));
+  if(hsl[0] != hsl[0] || hp < 0){
+    rgb[0]=0;rgb[1]=0;rgb[2]=0;
+  }
+  else if(hp <= 1){
+    rgb[0]=c;rgb[1]=x;rgb[2]=0;
+  }
+  else if(hp <= 2){
+    rgb[0]=x;rgb[1]=c;rgb[2]=0;
+  }
+  else if(hp <= 3){
+    rgb[0]=0;rgb[1]=c;rgb[2]=x;
+  }
+  else if(hp <= 4){
+    rgb[0]=0;rgb[1]=x;rgb[2]=c;
+  }
+  else if(hp <= 5){
+    rgb[0]=x;rgb[1]=0;rgb[2]=c;
+  }
+  else if(hp <= 6){
+    rgb[0]=c;rgb[1]=0;rgb[2]=x;
+  }
+  float m = hsl[2] - 0.5*c;
+  rgb[0] += m; rgb[1] += m; rgb[2] += m;
+}
+ 
+//-- return value - position where parser stopped
+const char* color_parser::parse_color_hsl( const char* str, agg::rgba8& color )
+{	
+	
+	bool hsla_format = false;	
+	
+	//-- check 'rgba' syntax
+	if( str[ HSL_KEYWORD_LEN ] == 'a' && str[ HSL_KEYWORD_LEN + 1] == '(' )
+		hsla_format = true;
+		
+	//-- check 'rgb(' syntax	
+	if( str[ HSL_KEYWORD_LEN ] != '(' )
+	{
+		throw exception("[%s] has a wrong syntax at position %i", str, HSL_KEYWORD_LEN+1);
+
+		return 0;
+	}
+	
+    //pos to begin search
+    str += ( hsla_format ? HSL_KEYWORD_LEN + 2 : HSL_KEYWORD_LEN + 1 );
+	 
+	bool value_is_percent = false; 
+	
+	int h = extract_next_value( str, ',', value_is_percent, 0 );	
+	float s = extract_next_value( str, ',', value_is_percent, 0 );  
+ 
+
+	float l = .0;
+	int a = 255;
+
+ 	if( hsla_format )
+	{
+		l = extract_next_value( str, ',', value_is_percent, 0 );  
+		a = static_cast<unsigned char>( 255 * get_opacity_value(str) + 0.5 );
+	}
+	else
+	{
+		l = extract_next_value( str, ')', value_is_percent, 0 );  
+	}	
+	
+
+    float hsl[] = {h,s/100.0,l/100.0};
+	float rgb[3];
+
+	hsl_to_rgb(rgb,hsl);
+
+	color.r = rgb[0]*255;
+	color.g = rgb[1]*255;	
+	color.b = rgb[2]*255;
+	color.a = a;
+
+	return str;
+}
+
 //--reads next RGB value from str, using stop_sign as delimiter    
 unsigned char color_parser::get_next_rgb_value( const char*& str, char stop_sign )
 {	
@@ -353,6 +437,9 @@ const char* color_parser::parse_color( const char* str, agg::rgba8& color )
 	
 	if( str_starts(str,RGB_KEYWORD) ) //-- check if string begins with "rgb"
 	    return parse_color_rgb( str, color );	
+
+	if( str_starts(str,HSL_KEYWORD) ) //-- check if string begins with "hsl"
+	    return parse_color_hsl( str, color );	
 
 	//-- assume that we have keyword i.e. named color	
 	
