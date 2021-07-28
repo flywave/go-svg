@@ -1,4 +1,4 @@
-﻿//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 // Anti-Grain Geometry - Version 2.4 
 // Copyright (C) 2002-2005 Maxim Shemanarev (McSeem)
 // Copyright (C) 2002 Hansruedi Baer (MacOS support)
@@ -23,7 +23,7 @@
 
 
 #include <stdio.h>
-#include <Carbon.h>
+#include <Carbon/Carbon.h>
 
 
 namespace agg

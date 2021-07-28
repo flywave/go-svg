@@ -196,38 +196,37 @@ IF ( agg_USE_FREETYPE )
     SET_TARGET_PROPERTIES( freetypefont  PROPERTIES OUTPUT_NAME aggfontfreetype${PFDEBUG} )
 ENDIF ( agg_USE_FREETYPE )
 
-#platform stuff to ease sample use
-SET( platform_HEADERS   
-    ../include/platform/agg_platform_support.h
-)
+# #platform stuff to ease sample use
+# SET( platform_HEADERS   
+#     ../include/platform/agg_platform_support.h
+# )
 
-IF(WIN32)
-    INCLUDE_DIRECTORIES( ../font_win32_tt )
+# IF(WIN32)
+#     INCLUDE_DIRECTORIES( ../font_win32_tt )
 
-    ADD_LIBRARY( platform STATIC
-        ../src/platform/win32/agg_win32_bmp.cpp
-        ../src/platform/win32/agg_platform_support.cpp
-        ../font_win32_tt/agg_font_win32_tt.cpp
+#     ADD_LIBRARY( platform STATIC
+#         ../src/platform/win32/agg_win32_bmp.cpp
+#         ../src/platform/win32/agg_platform_support.cpp
+#         ../font_win32_tt/agg_font_win32_tt.cpp
 		
-		${platform_HEADERS}		
-    )
-	INSTALL( FILES ../font_win32_tt/agg_font_win32_tt.h DESTINATION agg/font_win32_tt )	
-ENDIF(WIN32)
-IF(UNIX)
-    ADD_LIBRARY( platform STATIC
-        ../src/platform/X11/agg_platform_support.cpp
-
-		${platform_HEADERS}		
-    )
-ENDIF(UNIX)
-IF(APPLE)
-    ADD_LIBRARY( platform STATIC
-        ../src/platform/mac/agg_mac_pmap.cpp
-        ../src/platform/mac/agg_platform_support.cpp
-
-		${platform_HEADERS}		
-    )
-ENDIF(APPLE)
+# 		${platform_HEADERS}		
+#     )
+# 	INSTALL( FILES ../font_win32_tt/agg_font_win32_tt.h DESTINATION agg/font_win32_tt )	
+# ENDIF(WIN32)
+# IF(UNIX)
+#     IF(APPLE)
+#         ADD_LIBRARY( platform STATIC
+#             ../src/platform/mac/agg_mac_pmap.cpp
+#             ${platform_HEADERS}		
+#         )
+#      TARGET_LINK_LIBRARIES(platform -framework Carbon -framework QuickTime)
+#      ELSE()
+#         ADD_LIBRARY( platform STATIC
+#         ../src/platform/X11/agg_platform_support.cpp
+#         ${platform_HEADERS}		
+#     )
+#     ENDIF(APPLE)
+# ENDIF(UNIX)
 
 IF ( agg_USE_GPC )
     INCLUDE_DIRECTORIES( ../gpc )

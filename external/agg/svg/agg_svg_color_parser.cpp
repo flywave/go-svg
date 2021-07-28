@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 #include "agg_svg_color_parser.h"
 #include "agg_svg_utils.h"
 #include <cstdlib> // for wcstombs
@@ -362,7 +362,7 @@ const char* color_parser::parse_color_hsl( const char* str, agg::rgba8& color )
 	}	
 	
 
-    float hsl[] = {h,s/100.0,l/100.0};
+    float hsl[] = {float(h),s/100.0f,l/100.0f};
 	float rgb[3];
 
 	hsl_to_rgb(rgb,hsl);

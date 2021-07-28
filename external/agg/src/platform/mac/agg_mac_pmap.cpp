@@ -1,4 +1,4 @@
-﻿//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
 // Contact: mcseemagg@yahoo.com
@@ -10,8 +10,8 @@
 //----------------------------------------------------------------------------
 
 #include <string.h>
-#include <Carbon.h>
-#include <QuickTimeComponents.h>
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTimeComponents.h>
 #include <ImageCompression.h>
 #include "platform/mac/agg_mac_pmap.h"
 #include "agg_basics.h"
