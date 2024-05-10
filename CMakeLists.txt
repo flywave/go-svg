@@ -76,7 +76,7 @@ IF(NOT ICU_INCLUDE)
   LIST(APPEND FLYWAVE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/external/icu/source/common/")
   LIST(APPEND FLYWAVE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/external/icu/source/i18n/")
   LIST(APPEND FLYWAVE_LIBRARY_DIRS "${CMAKE_CURRENT_BINARY_DIR}/external/icu/")
-  LIST(APPEND FLYWAVE_LIBRARY_DEPES "icudata" "icui18n" "icuuc" "icudt")
+  LIST(APPEND FLYWAVE_LIBRARY_DEPES "icudata-svg" "icui18n-svg" "icuuc-svg" "icudt-svg" "icutools-svg")
   SET(ICU_INCLUDE YES)
 ENDIF()
 
