@@ -7,6 +7,6 @@ package svg
 // #cgo CXXFLAGS: -I ./ -I ./libs
 // #cgo linux LDFLAGS:  -L ./libs/linux -Wl,--start-group  -lstdc++ -lm -pthread -ldl -lcsvg -lsvg -lxml2 -lzlib -lantigrain -lcontrols -lexpat -lfontconfig -lfreetype -licutools-svg -licui18n-svg -licudt-svg -licudata-svg -licuuc-svg   -Wl,--end-group
 // #cgo windows LDFLAGS: -L ./libs/windows -lcsvg -lsvg -lxml2 -lzlib -lantigrain -lcontrols -lexpat -lfontconfig -lfreetype -licutools-svg -licui18n-svg -licudt-svg -licudata-svg -licuuc-svg
-// #cgo darwin LDFLAGS: -L /usr/libs/darwin -lc++ -L　./libs -lcsvg -lsvg -lxml2 -lzlib -lantigrain -lcontrols -lexpat -lfontconfig -lfreetype -licutools-svg -licui18n-svg -licudt-svg -licudata-svg -licuuc-svg
-// #cgo darwin,arm LDFLAGS: -L /usr/libs/darwin_arm -lc++ -L　./libs -lcsvg -lsvg -lxml2 -lzlib -lantigrain -lcontrols -lexpat -lfontconfig -lfreetype -licutools-svg -licui18n-svg -licudt-svg -licudata-svg -licuuc-svg
+// #cgo darwin,amd64 LDFLAGS: -L ./libs/darwin -lc++ -L　./libs -lcsvg -lsvg -lxml2 -lzlib -lantigrain -lcontrols -lexpat -lfontconfig -lfreetype -licutools-svg -licui18n-svg -licudt-svg -licudata-svg -licuuc-svg
+// #cgo darwin,arm64 LDFLAGS: -L ./libs/darwin_arm -lc++ -L　./libs -lcsvg -lsvg -lxml2 -lzlib -lantigrain -lcontrols -lexpat -lfontconfig -lfreetype -licutools-svg -licui18n-svg -licudt-svg -licudata-svg -licuuc-svg
 import "C"
